@@ -1,10 +1,9 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/sections/hero"
-import { VisionSection } from "@/components/sections/vision"
-import { PhilosophySection } from "@/components/sections/philosophy"
-import { ExperienceSection } from "@/components/sections/experience"
-import { DishesSection } from "@/components/sections/dishes"
-import { ContactSection } from "@/components/sections/contact"
+import { FeaturedSection } from "@/components/sections/featured"
+import { TestimonialsSection } from "@/components/sections/testimonials"
+import { GalleryPreview } from "@/components/sections/gallery-preview"
+import { WhyChooseUs } from "@/components/sections/why-choose-us"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
@@ -12,11 +11,10 @@ export default function Home() {
     <main className="min-h-screen bg-background">
       <Header />
       <HeroSection />
-      <VisionSection />
-      <PhilosophySection />
-      <ExperienceSection />
-      <DishesSection />
-      <ContactSection />
+      <FeaturedSection />
+      <TestimonialsSection />
+      <GalleryPreview />
+      <WhyChooseUs />
       <Footer />
     </main>
   )

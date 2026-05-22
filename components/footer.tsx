@@ -1,122 +1,150 @@
 "use client"
 
 import Link from "next/link"
+import { Instagram, Facebook, Youtube, Twitter } from "lucide-react"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
+  const quickLinks = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Portfolio", href: "/portfolio" },
+    { label: "Contact Us", href: "/contact" },
+  ]
+
+  const portfolioLinks = [
+    { label: "Pre Wedding", href: "/portfolio/pre-wedding" },
+    { label: "Wedding Ceremony", href: "/portfolio/wedding-ceremony" },
+    { label: "Reception", href: "/portfolio/reception" },
+    { label: "Candid Moments", href: "/portfolio/candid-moments" },
+    { label: "Destination Weddings", href: "/portfolio/destination-weddings" },
+  ]
+
+  const socialLinks = [
+    { name: "Instagram", icon: Instagram, url: "https://instagram.com" },
+    { name: "Facebook", icon: Facebook, url: "https://facebook.com" },
+    { name: "Youtube", icon: Youtube, url: "https://youtube.com" },
+    { name: "Twitter", icon: Twitter, url: "https://twitter.com" },
+  ]
+
   return (
-    <footer className="relative py-16 md:py-24 border-t border-border">
+    <footer className="relative py-16 md:py-24 border-t border-border bg-card">
       <div className="max-w-[1800px] mx-auto px-6 md:px-12 lg:px-20">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
           {/* Logo & Tagline */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="space-y-6">
             <Link href="/" className="inline-block">
-              <span className="font-serif text-2xl md:text-3xl font-light tracking-[0.2em] text-foreground">
-                ESSENCE
+              <span className="font-serif text-2xl md:text-3xl font-medium tracking-wide text-primary">
+                Wedding Wings
               </span>
             </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-sm">
-              Three-Michelin-star restaurant celebrating the art of French haute cuisine with modern sensibility. Located in the heart of Paris.
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Capturing your most precious moments with cinematic elegance and timeless artistry. Every love story deserves to be told beautifully.
             </p>
+            {/* Social Links */}
+            <div className="flex items-center gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  className="flex items-center justify-center w-10 h-10 border border-border text-muted-foreground hover:text-primary hover:border-primary transition-all duration-300"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                >
+                  <social.icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Navigation */}
-          <div className="lg:col-span-2">
-            <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6">
-              Restaurant
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-xs tracking-[0.2em] uppercase text-accent mb-6">
+              Quick Links
             </h4>
-            <nav className="space-y-4">
-              {["Vision", "Philosophy", "Experience", "Signature Dishes", "Reservations"].map((item) => (
+            <nav className="space-y-3">
+              {quickLinks.map((item) => (
                 <Link
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="block text-sm text-foreground/70 hover:text-foreground transition-colors duration-300"
+                  key={item.label}
+                  href={item.href}
+                  className="block text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
                 >
-                  {item}
+                  {item.label}
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* Legal */}
-          <div className="lg:col-span-2">
-            <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6">
-              Legal
+          {/* Portfolio */}
+          <div>
+            <h4 className="text-xs tracking-[0.2em] uppercase text-accent mb-6">
+              Portfolio
             </h4>
-            <nav className="space-y-4">
-              {["Privacy Policy", "Terms of Service", "Accessibility"].map((item) => (
+            <nav className="space-y-3">
+              {portfolioLinks.map((item) => (
                 <Link
-                  key={item}
-                  href="#"
-                  className="block text-sm text-foreground/70 hover:text-foreground transition-colors duration-300"
+                  key={item.label}
+                  href={item.href}
+                  className="block text-sm text-muted-foreground hover:text-primary transition-colors duration-300"
                 >
-                  {item}
+                  {item.label}
                 </Link>
               ))}
             </nav>
           </div>
 
-          {/* Contact Quick */}
-          <div className="lg:col-span-4">
-            <h4 className="text-xs tracking-[0.2em] uppercase text-muted-foreground mb-6">
+          {/* Contact Info */}
+          <div>
+            <h4 className="text-xs tracking-[0.2em] uppercase text-accent mb-6">
               Get in Touch
             </h4>
             <div className="space-y-4">
-              <p className="text-sm text-foreground/70">
-                428 rue Saint-Honoré<br />
-                75001 Paris, France
+              <p className="text-sm text-muted-foreground">
+                123 Wedding Avenue<br />
+                Mumbai, Maharashtra 400001
               </p>
               <p className="text-sm">
                 <a 
-                  href="mailto:reserve@essence-paris.fr" 
-                  className="text-foreground hover:text-accent transition-colors duration-300"
+                  href="mailto:hello@weddingwings.com" 
+                  className="text-primary hover:text-accent transition-colors duration-300"
                 >
-                  reserve@essence-paris.fr
+                  hello@weddingwings.com
                 </a>
               </p>
               <p className="text-sm">
                 <a 
-                  href="tel:+33142608080" 
-                  className="text-foreground/70 hover:text-foreground transition-colors duration-300"
+                  href="tel:+919876543210" 
+                  className="text-muted-foreground hover:text-primary transition-colors duration-300"
                 >
-                  +33 1 42 60 80 80
+                  +91 98765 43210
                 </a>
               </p>
+              {/* WhatsApp shortcut */}
+              <a 
+                href="https://wa.me/919876543210"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm text-[#25D366] hover:underline"
+              >
+                Chat on WhatsApp
+              </a>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-xs text-muted-foreground">
-            © {currentYear} ESSENCE. All rights reserved.
+          <p className="text-xs text-muted-foreground text-center md:text-left">
+            © {currentYear} Wedding Wings Photography. All rights reserved.
           </p>
-          
-          {/* Social Links */}
-          <div className="flex items-center gap-8">
-            {[
-              { name: "Instagram", url: "#" },
-              { name: "La Liste", url: "#" },
-              { name: "Michelin Guide", url: "#" },
-            ].map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {social.name}
-              </a>
-            ))}
-          </div>
 
           {/* Back to Top */}
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="group flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300"
+            className="group flex items-center gap-2 text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-primary transition-colors duration-300"
           >
             <span>Back to top</span>
             <svg 
@@ -132,8 +160,8 @@ export function Footer() {
 
         {/* Large Decorative Text */}
         <div className="mt-16 md:mt-24 overflow-hidden">
-          <p className="font-serif text-[8vw] md:text-[6vw] lg:text-[5vw] font-light tracking-[-0.02em] text-foreground/[0.03] leading-none whitespace-nowrap">
-            Cuisine is the art that nourishes both body and soul.
+          <p className="font-serif text-[8vw] md:text-[6vw] lg:text-[5vw] font-light tracking-[-0.02em] text-primary/[0.05] leading-none whitespace-nowrap text-center">
+            Every love story is beautiful.
           </p>
         </div>
       </div>

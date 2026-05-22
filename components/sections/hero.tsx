@@ -1,180 +1,137 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { ImageReveal } from "@/components/ui/image-reveal"
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { motion } from "framer-motion"
+import { ChevronDown } from "lucide-react"
+
+const heroImages = [
+  "/images/hero-wedding.jpg",
+  "/images/wedding-1.jpg",
+  "/images/wedding-2.jpg",
+]
 
 export function HeroSection() {
+  const [currentImage, setCurrentImage] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
-  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     setIsLoaded(true)
-    
-    const handleScroll = () => {
-      if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect()
-        if (rect.bottom > 0) {
-          setScrollY(window.scrollY)
-        }
-      }
-    }
-    
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % heroImages.length)
+    }, 5000)
+    return () => clearInterval(interval)
   }, [])
 
   return (
-    <section 
-      ref={sectionRef}
-      className="relative min-h-screen flex items-end overflow-hidden"
-    >
-      {/* Background Image with Parallax */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{ transform: `translateY(${scrollY * 0.3}px)` }}
-      >
-        <ImageReveal
-          src="/images/hero.jpg"
-          alt="Chef meticulously plating haute cuisine in minimalist kitchen"
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-          delay={300}
-        />
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-transparent" />
-      </div>
-
-      {/* Architectural Grid Lines */}
-      <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-        <div 
-          className="absolute left-[10%] top-0 w-px h-full bg-foreground/5"
-          style={{
-            transform: `translateY(${-scrollY * 0.1}px)`,
-          }}
-        />
-        <div 
-          className="absolute left-[30%] top-0 w-px h-full bg-foreground/5"
-          style={{
-            transform: `translateY(${-scrollY * 0.15}px)`,
-          }}
-        />
-        <div 
-          className="absolute right-[20%] top-0 w-px h-full bg-foreground/5"
-          style={{
-            transform: `translateY(${-scrollY * 0.08}px)`,
-          }}
-        />
-        <div 
-          className="absolute top-[40%] left-0 w-full h-px bg-foreground/5"
-          style={{
-            transform: `translateX(${scrollY * 0.05}px)`,
-          }}
-        />
-      </div>
+    <section className="relative h-screen w-full overflow-hidden">
+      {/* Background Image Slider */}
+      {heroImages.map((src, index) => (
+        <div
+          key={src}
+          className="absolute inset-0 transition-opacity duration-1500 ease-in-out"
+          style={{ opacity: index === currentImage ? 1 : 0 }}
+        >
+          <Image
+            src={src}
+            alt="Wedding photography"
+            fill
+            className="object-cover"
+            priority={index === 0}
+          />
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-background/70" />
+        </div>
+      ))}
 
       {/* Content */}
-      <div className="relative z-20 w-full max-w-[1800px] mx-auto px-6 md:px-12 lg:px-20 pb-16 md:pb-24 lg:pb-32">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-          {/* Main Headline */}
-          <div className="lg:col-span-8">
-            <div className="overflow-hidden">
-              <h1 
-                className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-light leading-[0.9] tracking-[-0.02em] text-foreground"
-                style={{
-                  transform: isLoaded ? "translateY(0)" : "translateY(100%)",
-                  opacity: isLoaded ? 1 : 0,
-                  transitionProperty: "all",
-                  transitionDuration: "1s",
-                  transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-                  transitionDelay: "0.3s"
-                }}
-              >
-                <span className="block text-pretty">Culinary artistry</span>
-                <span className="block text-pretty">that transcends</span>
-                <span className="block text-accent italic">the plate</span>
-              </h1>
-            </div>
-          </div>
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 30 }}
+          transition={{ duration: 1, delay: 2.3 }}
+          className="max-w-4xl"
+        >
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+            transition={{ duration: 0.8, delay: 2.5 }}
+            className="mb-6 text-sm tracking-[0.3em] uppercase text-accent"
+          >
+            Premium Wedding Photography
+          </motion.p>
+          
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+            transition={{ duration: 0.8, delay: 2.7 }}
+            className="font-serif text-4xl md:text-6xl lg:text-7xl font-medium text-primary leading-tight text-balance"
+          >
+            Capturing Love Stories Forever
+          </motion.h1>
+          
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+            transition={{ duration: 0.8, delay: 2.9 }}
+            className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty"
+          >
+            Where every frame tells a story of timeless romance, and every moment becomes an eternal memory
+          </motion.p>
 
-          {/* Supporting Text */}
-          <div className="lg:col-span-4 lg:pb-4">
-            <div 
-              className="space-y-6"
-              style={{
-                transform: isLoaded ? "translateY(0)" : "translateY(40px)",
-                opacity: isLoaded ? 1 : 0,
-                transitionProperty: "all",
-                transitionDuration: "0.8s",
-                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-                transitionDelay: "0.6s"
-              }}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+            transition={{ duration: 0.8, delay: 3.1 }}
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <Link
+              href="/portfolio"
+              className="px-8 py-4 text-sm tracking-[0.1em] uppercase bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-px bg-accent" />
-                <span className="text-xs tracking-[0.3em] uppercase text-muted-foreground">Since 2012</span>
-              </div>
-              <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-md">
-                Three Michelin stars celebrating the precision of French technique, the purity of seasonal ingredients, and the poetry of each moment.
-              </p>
-              <div className="pt-2">
-                <a 
-                  href="#dishes"
-                  className="inline-flex items-center gap-3 group text-sm tracking-[0.1em] uppercase text-foreground"
-                >
-                  <span className="bg-black my-0 py-3 text-white px-3">Discover Our Cuisine</span>
-                  
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+              View Portfolio
+            </Link>
+            <Link
+              href="/contact"
+              className="px-8 py-4 text-sm tracking-[0.1em] uppercase border border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+            >
+              Book a Session
+            </Link>
+          </motion.div>
+        </motion.div>
 
         {/* Scroll Indicator */}
-        <div 
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-3"
-          style={{
-            opacity: isLoaded ? 1 : 0,
-            transitionProperty: "opacity",
-            transitionDuration: "1s",
-            transitionTimingFunction: "ease",
-            transitionDelay: "1.2s"
-          }}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isLoaded ? 1 : 0 }}
+          transition={{ duration: 1, delay: 3.5 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
-          <span className="text-xs tracking-[0.2em] uppercase text-muted-foreground">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-foreground/40 to-transparent relative overflow-hidden">
-            <div className="absolute inset-0 w-full bg-accent animate-pulse" style={{ animation: "scrollPulse 2s ease-in-out infinite" }} />
-          </div>
-        </div>
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="flex flex-col items-center gap-2 text-muted-foreground"
+          >
+            <span className="text-xs tracking-[0.2em] uppercase">Scroll</span>
+            <ChevronDown className="h-5 w-5" />
+          </motion.div>
+        </motion.div>
       </div>
 
-      {/* Corner Decorative Element */}
-      <div 
-        className="absolute top-32 right-6 md:right-12 lg:right-20 z-20 hidden md:block"
-        style={{
-          opacity: isLoaded ? 1 : 0,
-          transform: isLoaded ? "translateX(0)" : "translateX(20px)",
-          transitionProperty: "all",
-          transitionDuration: "0.8s",
-          transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-          transitionDelay: "0.9s"
-        }}
-      >
-        <div className="flex items-center gap-4 text-xs tracking-[0.2em] uppercase text-muted-foreground">
-          <span>47.6062° N</span>
-          <div className="w-8 h-px bg-border" />
-          <span>122.3321° W</span>
-        </div>
+      {/* Image Indicators */}
+      <div className="absolute bottom-10 right-10 z-10 hidden md:flex items-center gap-3">
+        {heroImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentImage(index)}
+            className={`h-1 transition-all duration-500 ${
+              index === currentImage ? "w-8 bg-accent" : "w-4 bg-primary/30"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
-
-      <style jsx>{`
-        @keyframes scrollPulse {
-          0%, 100% { transform: translateY(-100%); }
-          50% { transform: translateY(100%); }
-        }
-      `}</style>
     </section>
   )
 }

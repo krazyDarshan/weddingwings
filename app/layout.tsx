@@ -1,30 +1,26 @@
 import React from "react"
 import type { Metadata } from 'next'
-import { DM_Sans, Cormorant_Garamond, JetBrains_Mono } from 'next/font/google'
+import { Playfair_Display, Montserrat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { WhatsAppButton } from "@/components/whatsapp-button"
+import { LoadingScreen } from "@/components/loading-screen"
 
-const dmSans = DM_Sans({ 
+const playfair = Playfair_Display({ 
   subsets: ["latin"],
-  variable: '--font-dm-sans',
-  weight: ['300', '400', '500', '600', '700']
+  variable: '--font-playfair',
+  weight: ['400', '500', '600', '700']
 });
 
-const cormorant = Cormorant_Garamond({ 
+const montserrat = Montserrat({ 
   subsets: ["latin"],
-  variable: '--font-cormorant',
+  variable: '--font-montserrat',
   weight: ['300', '400', '500', '600', '700']
-});
-
-const jetbrainsMono = JetBrains_Mono({ 
-  subsets: ["latin"],
-  variable: '--font-jetbrains',
-  weight: ['400', '500']
 });
 
 export const metadata: Metadata = {
-  title: 'ESSENCE — Haute Gastronomie',
-  description: 'Michelin-starred culinary experience where technique, artistry, and the finest ingredients converge to create unforgettable moments.',
+  title: 'Wedding Wings — Capturing Love Stories Forever',
+  description: 'Premium wedding photography capturing your most precious moments with cinematic elegance and timeless artistry.',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -51,9 +47,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${dmSans.variable} ${cormorant.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
+    <html lang="en" className="bg-background">
+      <body className={`${playfair.variable} ${montserrat.variable} font-sans antialiased`}>
+        <LoadingScreen />
         {children}
+        <WhatsAppButton />
         <Analytics />
       </body>
     </html>
