@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Montserrat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { ThemeProvider } from "@/components/theme-provider"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { LoadingScreen } from "@/components/loading-screen"
 
@@ -47,11 +48,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
-      <body className={`${playfair.variable} ${montserrat.variable} font-sans antialiased`}>
-        <LoadingScreen />
-        {children}
-        <WhatsAppButton />
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${playfair.variable} ${montserrat.variable} font-sans antialiased bg-background`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <LoadingScreen />
+          {children}
+          <WhatsAppButton />
+        </ThemeProvider>
         <Analytics />
       </body>
     </html>

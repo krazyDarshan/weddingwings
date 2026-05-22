@@ -5,6 +5,7 @@ import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -103,7 +104,8 @@ export function Header() {
           </nav>
 
           {/* CTA Button */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex items-center gap-4">
+            <ThemeToggle />
             <Link
               href="/contact"
               className="inline-flex items-center gap-2 px-6 py-3 text-sm tracking-[0.1em] uppercase text-primary-foreground bg-primary hover:bg-primary/90 transition-all duration-300"
@@ -113,27 +115,30 @@ export function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden relative w-10 h-10 flex items-center justify-center"
-            aria-label="Toggle menu"
-          >
-            <div className="flex flex-col gap-1.5">
-              <span 
-                className={cn(
-                  "w-6 h-px bg-primary transition-all duration-300",
-                  isMobileMenuOpen && "rotate-45 translate-y-[4px]"
-                )} 
-              />
-              <span 
-                className={cn(
-                  "w-6 h-px bg-primary transition-all duration-300",
-                  isMobileMenuOpen && "-rotate-45 -translate-y-[3px]"
-                )} 
-              />
-            </div>
-          </button>
+          <div className="lg:hidden flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="relative w-10 h-10 flex items-center justify-center"
+              aria-label="Toggle menu"
+            >
+              <div className="flex flex-col gap-1.5">
+                <span 
+                  className={cn(
+                    "w-6 h-px bg-primary transition-all duration-300",
+                    isMobileMenuOpen && "rotate-45 translate-y-[4px]"
+                  )} 
+                />
+                <span 
+                  className={cn(
+                    "w-6 h-px bg-primary transition-all duration-300",
+                    isMobileMenuOpen && "-rotate-45 -translate-y-[3px]"
+                  )} 
+                />
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
